@@ -10,6 +10,33 @@ public class Wordle{
         return words.get(idx);
 
     }
+    static void play(String random_word){
+        Scanner sc = new Scanner(System.in);
+        String guess = "";
+        while (!guess.equals(random_word)){
+            guess = sc.nextLine();
+            System.out.println(feedback(guess, random_word));
+        }
+         System.out.println("Congratulations! You guessed the correct word.");
+        sc.close();
+    }
+    static String feedback(String guess, String word){
+        String feedback = "";
+        for(int i = 0;i < guess.length(); i++){
+            char c = guess.charAt(i);
+            if(c == word.charAt(i)){
+                feedback += "\033[32m" + c;
+            }
+            else if(word.contains(c+"")){
+                feedback += "\033[33m" + c;
+            }
+            else{
+                feedback += "\033[0m" + c;
+            }
+        }
+        return feedback + "\033[0m";
+    }
+
     public static void main (String[] args){
         final String fileName = "words.txt";
         List<String> wordList = new ArrayList<>();
@@ -21,6 +48,9 @@ public class Wordle{
         } catch (IOException e){
             e.printStackTrace();
         }
-        System.out.println(random_word(wordList));
+        
+        String random = random_word(wordList);
+        // System.out.println(random);
+        play(random);
     }
 }
