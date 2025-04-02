@@ -54,7 +54,7 @@ public class Wordle{
                 wordList.add(line.trim());
             }
         } catch (IOException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         
         String random = random_word(wordList);
