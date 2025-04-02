@@ -1,14 +1,11 @@
 import java.io.*;
 import java.util.*;
 import java.util.random.RandomGenerator;
-
 public class Wordle{
-    
     static String random_word(List<String> words){
         RandomGenerator random = RandomGenerator.getDefault();
         int idx = random.nextInt(words.size());
         return words.get(idx);
-
     }
     static void play(String random_word){
         Scanner sc = new Scanner(System.in);
@@ -17,7 +14,12 @@ public class Wordle{
         while(!guess.equals(random_word) && counter<=6){
             System.out.println("Guess #"+counter);
             guess = sc.nextLine();
-            System.out.println(feedback(guess, random_word));
+            if (guess.length() != 5){
+                System.out.println("Not a 5 letter word");
+            }
+            else{
+                System.out.println(feedback(guess, random_word));
+            }
             counter++;
         }
         if(guess.equals(random_word)){
@@ -44,7 +46,6 @@ public class Wordle{
         }
         return feedback + "\033[0m";
     }
-
     public static void main (String[] args){
         final String fileName = "words.txt";
         List<String> wordList = new ArrayList<>();
@@ -56,9 +57,7 @@ public class Wordle{
         } catch (IOException e){
             System.out.println(e.getMessage());
         }
-        
         String random = random_word(wordList);
-        // System.out.println(random);
         play(random);
     }
 }
